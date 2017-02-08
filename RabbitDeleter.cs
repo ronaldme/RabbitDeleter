@@ -16,6 +16,16 @@ namespace RabbitDeleter
                 ConfigurationManager.AppSettings["user"], ConfigurationManager.AppSettings["password"]);
         }
 
+        public void PurgeQueues()
+        {
+            var queues = managementClient.GetQueues();
+
+            foreach (Queue queue in queues)
+            {
+                managementClient.Purge(queue);
+            }
+        }
+
         public void RemoveAllQueues()
         {
             var queues = managementClient.GetQueues();
