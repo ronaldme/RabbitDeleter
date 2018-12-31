@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using EasyNetQ.Management.Client;
 using EasyNetQ.Management.Client.Model;
 
@@ -16,35 +17,35 @@ namespace RabbitDeleter
                 ConfigurationManager.AppSettings["user"], ConfigurationManager.AppSettings["password"]);
         }
 
-        public void PurgeQueues()
+        public async Task PurgeQueues()
         {
-            var queues = managementClient.GetQueues();
+            var queues = await managementClient.GetQueuesAsync();
 
             foreach (Queue queue in queues)
             {
-                managementClient.Purge(queue);
+                await managementClient.PurgeAsync(queue);
             }
         }
 
-        public void RemoveAllQueues()
+        public async Task RemoveAllQueues()
         {
-            var queues = managementClient.GetQueues();
+            var queues = await managementClient.GetQueuesAsync();
 
             foreach (Queue queue in queues)
             {
-                managementClient.DeleteQueue(queue);
+                await managementClient.DeleteQueueAsync(queue);
             }
         }
 
-        public void RemoveAllExchanges()
+        public async Task RemoveAllExchanges()
         {
-            var exchanges = managementClient.GetExchanges();
+            var exchanges = await managementClient.GetExchangesAsync();
 
             foreach (Exchange exchange in exchanges.Where(x => !string.IsNullOrEmpty(x.Name)))
             {
                 try
                 {
-                    managementClient.DeleteExchange(exchange);
+                    await managementClient.DeleteExchangeAsync(exchange);
                 }
                 catch (Exception e)
                 {

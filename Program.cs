@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace RabbitDeleter
 {
@@ -6,18 +7,24 @@ namespace RabbitDeleter
     {
         public static void Main(string[] args)
         {
+            RabbitDelete().GetAwaiter().GetResult();
+        }
+
+        private static async Task RabbitDelete()
+        {
             try
             {
                 var rabbitDeleter = new RabbitDeleter();
-                rabbitDeleter.RemoveAllQueues();
-                rabbitDeleter.RemoveAllExchanges();
+                await rabbitDeleter.RemoveAllQueues();
+                await rabbitDeleter.RemoveAllExchanges();
+                Console.WriteLine("Success!");
             }
             catch (Exception e)
             {
-                // some exchanges cannot be deleted
+                Console.WriteLine("Failed:");
+                Console.WriteLine(e.Message);
             }
 
-            Console.WriteLine("Success!");
             Console.ReadLine();
         }
     }
