@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+	<OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+   <ItemGroup>
+    <PackageReference Include="EasyNetQ.Management.Client" Version="1.2.0" />
+    <PackageReference Include="EasyNetQ" Version="3.7.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.1.2" />
+  </ItemGroup>
+  
+</Project>
