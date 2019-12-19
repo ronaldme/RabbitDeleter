@@ -5,9 +5,9 @@ namespace RabbitDeleter
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            RabbitDelete().GetAwaiter().GetResult();
+            await RabbitDelete().ConfigureAwait(false);
         }
 
         private static async Task RabbitDelete()
