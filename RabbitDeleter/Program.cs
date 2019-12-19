@@ -7,14 +7,17 @@ namespace RabbitDeleter
     {
         public static async Task Main(string[] args)
         {
-            await RabbitDelete().ConfigureAwait(false);
+            if (args.Length == 3)
+                await RabbitDelete(args[01], args[1], args[2]).ConfigureAwait(false);
+            else 
+                await RabbitDelete().ConfigureAwait(false);
         }
 
-        private static async Task RabbitDelete()
+        private static async Task RabbitDelete(string host = null, string user = null, string password = null)
         {
             try
             {
-                var rabbitDeleter = new RabbitDeleter();
+                var rabbitDeleter = new RabbitDeleter(host, user, password);
                 await rabbitDeleter.RemoveAllQueues();
                 await rabbitDeleter.RemoveAllExchanges();
                 Console.WriteLine("Success!");

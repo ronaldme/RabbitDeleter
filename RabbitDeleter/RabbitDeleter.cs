@@ -11,10 +11,12 @@ namespace RabbitDeleter
     {
         private readonly ManagementClient managementClient;
 
-        public RabbitDeleter()
+        public RabbitDeleter(string host, string user, string password)
         {
-            managementClient = new ManagementClient(ConfigurationManager.AppSettings["host"],
-                ConfigurationManager.AppSettings["user"], ConfigurationManager.AppSettings["password"]);
+            managementClient = new ManagementClient(
+                host ?? ConfigurationManager.AppSettings["host"],
+                user ?? ConfigurationManager.AppSettings["user"],
+                password ?? ConfigurationManager.AppSettings["password"]);
         }
 
         public async Task PurgeQueues()
